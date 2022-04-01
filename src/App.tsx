@@ -1,61 +1,103 @@
-import React, { ReactElement, useState } from 'react'
-import logo from './logo.svg'
+import moment from 'moment'
+import React, { ReactElement, useRef, useState } from 'react'
+import Card from './components/Card'
 
 function App(): ReactElement {
-  const [count, setCount] = useState(0)
+  const [atTop, setAtTop] = useState(true)
+
+  const start = moment([2013, 10, 1])
+  const now = moment()
+  const yearDiff = now.diff(start, "year")
+  const monthDiff = now.diff(start, "month") % 12
+  const dayDiff = now.date() - start.date()
+
+  const getDiff = () => {
+    var res = ""
+    if (yearDiff > 1) {
+      res += yearDiff + " Jahre"
+    } else if (yearDiff > 0) {
+      res += yearDiff + " Jahr"
+    }
+
+    if (monthDiff > 0) {
+      if (yearDiff > 0) {
+        res += ", "
+      }
+      if (monthDiff > 1) {
+        res += monthDiff + " Monate"
+      } else {
+        res += monthDiff + " Monat"
+      }
+
+    }
+
+    if (dayDiff > 0) {
+      if (monthDiff > 0) {
+        res += ", "
+      }
+      if (dayDiff > 1) {
+        res += dayDiff + " Tage"
+      } else {
+        res += dayDiff + " Tag"
+      }
+    }
+
+    return res
+  }
+
+  const regler = () => {
+  }
+
 
   return (
-    <div className="border border-gray-50 rounded-xl p-20 shadow-xl">
-      <header>
-        <div className="flex justify-center">
-          <img src={logo} className="h-32 w-32 animate-spin-slow" alt="logo" />
-        </div>
-        <p className="text-2xl pb-3">Hello Vite + React + tailwindcss!</p>
-        <p>
-          <button
-            className="bg-purple-400 pl-2 pr-2 pt-1 pb-1 rounded text-sm text-purple-100"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is: {count}
-          </button>
-        </p>
-        <p className="pb-3 pt-3">
-          Edit{' '}
-          <code className="border border-1 pl-1 pr-1 pb-0.5 pt-0.5 rounded border-purple-400 font-mono text-sm bg-purple-100 text-purple-900">
-            src/App.tsx
-          </code>{' '}
-          and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="text-purple-400 underline"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="text-purple-400 underline"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-          {' | '}
-          <a
-            className="text-purple-400 underline"
-            href="https://tailwindcss.com/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            tailwindcss Docs
-          </a>
-        </p>
-      </header>
+    <div className='h-full w-full snap-y snap-mandatory overflow-x-hidden select-none' onScroll={event => {
+      setAtTop((event.target as any).scrollTop === 0) // TODO remove knaup
+    }}>
+      <div className='h-screen w-screen flex flex-col p-4 gap-10 overflow-auto justify-center snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>Hat Domi seinen Bachelor?</h1>
+          <p className='text-3xl font-extrabold mt-4'>Nein</p>
+        </Card>
+        <Card>
+          <h1 className='text-xl'>Immatrikuliert seit</h1>
+          <p>{getDiff()}</p>
+        </Card>
+        {atTop ?
+          <div className='fixed bottom-4 left-0 flex flex-row justify-center w-full max-h-10 animate-bounce opacity-100 transition-all duration-200'>
+            <svg viewBox="0 0 32 32" className='fill-gray-500 h-full w-12'><path d="M14.496 5.975l-.001 14.287-6.366-6.367L6 16.021l10.003 10.004L26 16.029 23.871 13.9l-6.366 6.368V5.977z" /></svg>
+          </div>
+          :
+          <div className='fixed bottom-4 left-0 flex flex-row justify-center w-full max-h-10 animate-bounce opacity-0 transition-all duration-200'>
+            <svg viewBox="0 0 32 32" className='fill-gray-500 h-full w-12'><path d="M14.496 5.975l-.001 14.287-6.366-6.367L6 16.021l10.003 10.004L26 16.029 23.871 13.9l-6.366 6.368V5.977z" /></svg>
+          </div>
+        }
+
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>Dafür hat er aber schon folgendes erreicht...</h1>
+        </Card>
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>World of Warcraft</h1>
+          <p className='text-3xl font-extrabold mt-4'>2x Cutting Edge</p>
+          <p className='text-3xl font-extrabold mt-4'>5x Keystone Master</p>
+        </Card>
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>League of Legends</h1>
+          <p className='text-3xl font-extrabold mt-4'>6x Gold Solo Queue</p>
+        </Card>
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>Das war's</h1>
+        </Card>
+      </div>
     </div>
+
   )
 }
 
