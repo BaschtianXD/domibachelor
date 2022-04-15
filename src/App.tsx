@@ -137,6 +137,12 @@ function App(): ReactElement {
       </div>
       <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
         <Card>
+          <h1 className='text-2xl'>Deadlift</h1>
+          <p className='text-3xl font-extrabold mt-4'>200 kg</p>
+        </Card>
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
           <h1 className='text-2xl'>Das war's</h1>
         </Card>
       </div>
