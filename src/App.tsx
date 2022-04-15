@@ -1,15 +1,28 @@
 import moment from 'moment'
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import Card from './components/Card'
 
 function App(): ReactElement {
   const [atTop, setAtTop] = useState(true)
+  const [now, setNow] = useState(moment())
+
+  useEffect(() => {
+    var timer = setInterval(() => {
+      setNow(moment())
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  })
 
   const start = moment([2013, 10, 1])
-  const now = moment()
+
   const yearDiff = now.diff(start, "year")
   const monthDiff = now.diff(start, "month") % 12
   const dayDiff = now.date() - start.date()
+  const hourDiff = now.diff(start, "hour") % 24
+  const minuteDiff = now.diff(start, "minute") % 60
+  const secondDiff = now.diff(start, "second") % 60
 
   const getDiff = () => {
     var res = ""
@@ -20,7 +33,7 @@ function App(): ReactElement {
     }
 
     if (monthDiff > 0) {
-      if (yearDiff > 0) {
+      if (res !== "") {
         res += ", "
       }
       if (monthDiff > 1) {
@@ -32,7 +45,7 @@ function App(): ReactElement {
     }
 
     if (dayDiff > 0) {
-      if (monthDiff > 0) {
+      if (res !== "") {
         res += ", "
       }
       if (dayDiff > 1) {
@@ -42,10 +55,42 @@ function App(): ReactElement {
       }
     }
 
-    return res
-  }
+    if (hourDiff > 0) {
+      if (res !== "") {
+        res += ", "
+      }
+      if (hourDiff > 1) {
+        res += hourDiff + " Stunden"
+      } else {
+        res += hourDiff + " Stunde"
+      }
+    }
 
-  const regler = () => {
+    if (minuteDiff > 0) {
+      if (res !== "") {
+        res += ", "
+      }
+      if (minuteDiff > 1) {
+        res += minuteDiff + " Minuten"
+      } else {
+        res += minuteDiff + " Minute"
+      }
+    }
+
+    if (secondDiff > 0) {
+      if (res !== "") {
+        res += ", "
+      }
+      if (secondDiff > 1) {
+        res += secondDiff + " Sekunden"
+      } else {
+        res += secondDiff + " Sekunde"
+      }
+    }
+
+
+
+    return res
   }
 
 
@@ -60,7 +105,7 @@ function App(): ReactElement {
         </Card>
         <Card>
           <h1 className='text-xl'>Immatrikuliert seit</h1>
-          <p>{getDiff()}</p>
+          <p className='mt-4'>{getDiff()}</p>
         </Card>
         {atTop ?
           <div className='fixed bottom-4 left-0 flex flex-row justify-center w-full max-h-10 animate-bounce opacity-100 transition-all duration-200'>
