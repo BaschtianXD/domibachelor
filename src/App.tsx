@@ -95,7 +95,7 @@ function App(): ReactElement {
 
 
   return (
-    <div className='h-full w-full snap-y snap-mandatory overflow-x-hidden select-none' onScroll={event => {
+    <div className='h-full w-full snap-y snap-mandatory overflow-x-hidden select-none dark:bg-slate-800 dark:text-slate-50' onScroll={event => {
       setAtTop((event.target as any).scrollTop === 0) // TODO remove knaup
     }}>
       <div className='h-screen w-screen flex flex-col p-4 gap-10 overflow-auto justify-center snap-start items-center'>
@@ -126,7 +126,7 @@ function App(): ReactElement {
       <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
         <Card>
           <h1 className='text-2xl'>World of Warcraft</h1>
-          <p className='text-3xl font-extrabold mt-4'>2x Cutting Edge</p>
+          <p className='text-3xl font-extrabold mt-4'>3x Cutting Edge</p>
         </Card>
       </div>
       <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
@@ -139,6 +139,13 @@ function App(): ReactElement {
         <Card>
           <h1 className='text-2xl'>Deadlift</h1>
           <p className='text-3xl font-extrabold mt-4'>200 kg</p>
+        </Card>
+      </div>
+      <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
+        <Card>
+          <h1 className='text-2xl'>American Football</h1>
+          <p className='text-3xl font-extrabold mt-4'>1x Innenbandriss</p>
+          <p className='text-3xl font-extrabold mt-4'>alles andere angerissen</p>
         </Card>
       </div>
       <div className='h-screen w-screen flex flex-col p-4 justify-center gap-10 snap-start items-center'>
